@@ -1,0 +1,26 @@
+{
+  "name": "beats-by-bay",
+  "version": "0.0.1",
+  "description": "Beats by Bay: Music made by a social media stream in SF",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "music",
+    "stream",
+    "social",
+    "map",
+    "maps"
+  ],
+  "author": "Andrew Burnes",
+  "license": "ISC",
+  "dependencies": {
+    "twit": "^1.1.15",
+    "socket.io": "^1.0.0-pre3",
+    "express": "^4.2.0",
+    "cookie-parser": "^1.0.1",
+    "body-parser": "^1.0.0",
+    "jade": "^1.3.0"
+  }
+}

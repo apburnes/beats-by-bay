@@ -1,0 +1,49 @@
+body {
+  font-family: Futura, sans-serif;
+  font-stretch: ultra-condensed;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+.header {
+  position: relative;
+  display: inline-block;
+  left: 0; top: 0;
+  margin: 20px 30px;
+  width: 380px;
+  z-index: 10;
+}
+
+.logo {
+  width: 100px;
+  height: auto;
+  display: inline-block;
+  position: absolute;
+}
+
+.nav {
+  display: inline-block;
+  position: absolute;
+  left: 110px;
+}
+
+.nav h1 {
+  word-spacing: -8px;
+  border-bottom: solid 1px #afafaf;
+}
+
+.nav h1 span {
+  color: #afafaf;
+  font-size: 20px;
+}
+
+#plot {
+  background-color: #fff;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0; left: 0; right: 0;
+  z-index: -1;
+}

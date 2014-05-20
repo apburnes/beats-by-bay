@@ -79,14 +79,12 @@ io.sockets.on('connection', function (socket) {
 
 app.get('/', function(req, res) {
   res.render('index', {
-      title: 'Test',
-      socket: ''
+      title: 'Beats by Bay'
   });
 });
 
 app.get('/about', function(req, res) {
   res.render('about', {
-    title: 'About',
-    socket:'/about'
+    title: 'About'
   });
 });

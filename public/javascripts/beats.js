@@ -1,29 +1,4 @@
 (function() {
-  plotBase();
-  window.onload = initSocket();
-})();
-
-function log(msg) {
-  console.log(msg);
-}
-
-function initSocket() {
-  if (io !== undefined) {
-    var host = window.location.host;
-    var socket = io.connect(host);
-    socket.on('connect', function() {
-      socket.emit('start stream');
-      socket.on('sf', function(data) {
-        console.log('SF');
-      })
-    });
-  }
-  else {
-    console.log('Not socket connection!')
-  }
-}
-
-function plotBase() {
   var width = parseInt(d3.select("#plot").style("width")),
       height = parseInt(d3.select("#plot").style("height"));
 
@@ -47,7 +22,7 @@ function plotBase() {
         .translate([0,0]);
 
     var b = path.bounds(lines),
-        s = 1.8 / Math.max((b[1][0]  - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
+        s = 1 / Math.max((b[1][0]  - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
         t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
 
     projection
@@ -68,4 +43,36 @@ function plotBase() {
   });
 
   d3.select(self.frameElement).style("height", height + "px");
-}
+
+  function addPoints(data) {
+    if (data.coordinates !== null) {
+      // d3.json(data, function(err, tweet) {
+      //   svg.selectAll("path")
+      //     .data(data.coordinates.coordinates)
+      // })
+      var coords = projection(data.coordinates.coordinates);
+      svg.append("path")
+        .datum({type: "Point", coordinates: data.coordinates.coordinates})
+        .attr("class", "points")
+        .attr("d", path);
+    }
+  }
+
+  function initSocket() {
+    if (io !== undefined) {
+      var host = window.location.host;
+      var socket = io.connect(host);
+      socket.on('connect', function() {
+        socket.emit('start stream');
+        socket.on('sf', function(data) {
+          addPoints(data);
+        })
+      });
+    }
+    else {
+      console.log('Not socket connection!')
+    }
+  }
+
+  window.onload = initSocket();
+})();

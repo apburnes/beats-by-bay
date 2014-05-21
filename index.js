@@ -1,23 +1,15 @@
 var config = require('./config');
 var Twit = require('twit');
 
-var T = new Twit({
-  consumer_key: config.consumer_key,
-  consumer_secret: config.consumer_secret,
-  access_token: config.access_token,
-  access_token_secret: config.access_token_secret
-});
+var T = new Twit(config.twit);
 
-var stream = T.stream('statuses/sample');
+var stream = T.stream('statuses/filter', {locations: [ '-122.75', '36.8', '-121.75', '37.8' ]});
 var i = 0;
 
-console.log('The Stream: ' + stream);
-console.log();
-
 stream.on('tweet', function(tweet) {
-  if (i < 10) {
+  if (i < 1) {
     i++;
-    console.log(tweet.user.name);
+    console.log(tweet);
   }
   else {
     stream.stop();

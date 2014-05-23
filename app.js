@@ -40,7 +40,7 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('start stream', function() {
     if (streamSF === null) {
-      streamSF = T.stream('statuses/filter', {locations: [ '-122.75', '36.8', '-121.75', '37.8' ]});
+      streamSF = T.stream('statuses/filter', {locations: [ '-122.62', '37.64', '-121.98', '37.92' ]});
       streamSF.on('tweet', function(tweet) {
         if (users.length > 0) {
           socket.emit('sf', tweet);

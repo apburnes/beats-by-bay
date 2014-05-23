@@ -22,7 +22,7 @@
         .translate([0,0]);
 
     var b = path.bounds(lines),
-        s = 1 / Math.max((b[1][0]  - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
+        s = 2 / Math.max((b[1][0]  - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
         t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
 
     projection
@@ -40,39 +40,45 @@
         .attr("class", "line")
         .attr("d", path);
 
+    function addPoints(data) {
+      if (data.coordinates !== null) {
+
+        var coords = projection(data.coordinates.coordinates);
+        var point = svg.append("path")
+          .datum({type: "Point", coordinates: data.coordinates.coordinates})
+          .attr("fill", "blue")
+          .attr("stroke", "#000")
+          .attr("stroke-width", 3)
+          .attr("d", path)
+
+        point.append("title")
+          .text(function (d) { return JSON.stringify(data.text)});
+
+        point.transition()
+          .style("opacity", .1)
+          .style("fill", "#000")
+          .duration(2000);
+      }
+    }
+
+    function initSocket() {
+      if (io !== undefined) {
+        var host = window.location.host;
+        var socket = io.connect(host);
+        socket.on('connect', function() {
+          socket.emit('start stream');
+          socket.on('sf', function(data) {
+            addPoints(data);
+          })
+        });
+      }
+      else {
+        console.log('Not socket connection!')
+      }
+    }
+
+    window.onload = initSocket();
   });
 
   d3.select(self.frameElement).style("height", height + "px");
-
-  function addPoints(data) {
-    if (data.coordinates !== null) {
-      // d3.json(data, function(err, tweet) {
-      //   svg.selectAll("path")
-      //     .data(data.coordinates.coordinates)
-      // })
-      var coords = projection(data.coordinates.coordinates);
-      svg.append("path")
-        .datum({type: "Point", coordinates: data.coordinates.coordinates})
-        .attr("class", "points")
-        .attr("d", path);
-    }
-  }
-
-  function initSocket() {
-    if (io !== undefined) {
-      var host = window.location.host;
-      var socket = io.connect(host);
-      socket.on('connect', function() {
-        socket.emit('start stream');
-        socket.on('sf', function(data) {
-          addPoints(data);
-        })
-      });
-    }
-    else {
-      console.log('Not socket connection!')
-    }
-  }
-
-  window.onload = initSocket();
 })();

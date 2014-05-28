@@ -1,13 +1,9 @@
 (function() {
-  // createjs.Sound.addEventListener("fileload", handleLoadComplete);
+
   createjs.Sound.registerSound({src:"/data/book-scale9.mp3|/data/book-scale9.ogg", id:"beep9"});
   createjs.Sound.registerSound({src:"/data/book-scale8.mp3|/data/book-scale8.ogg", id:"beep8"});
   createjs.Sound.registerSound({src:"/data/book-scale7.mp3|/data/book-scale7.ogg", id:"beep7"});
   createjs.Sound.registerSound({src:"/data/book-scale6.mp3|/data/book-scale6.ogg", id:"beep6"});
-
-  // function handleLoadComplete() {
-  //     createjs.Sound.play("beep9");
-  // }
 
   var width = parseInt(d3.select("#plot").style("width")),
       height = parseInt(d3.select("#plot").style("height"));
@@ -54,7 +50,7 @@
       if (data.coordinates !== null) {
         var lat = parseFloat(data.coordinates.coordinates[1]);
         var coords = projection(data.coordinates.coordinates);
-        if (lat <= 35) {
+        if (lat <= 37.5) {
           var point = svg.append("path")
             .datum({type: "Point", coordinates: data.coordinates.coordinates})
             .attr("fill", "blue")
@@ -65,7 +61,7 @@
           createjs.Sound.play("beep6");
         }
 
-        else if (lat > 35 && lat <= 36) {
+        else if (lat > 37.5 && lat <= 37.65) {
           var point = svg.append("path")
             .datum({type: "Point", coordinates: data.coordinates.coordinates})
             .attr("fill", "red")
@@ -76,7 +72,7 @@
           createjs.Sound.play("beep7");
         }
 
-        else if (lat > 36 && lat <= 37) {
+        else if (lat > 37.65 && lat <= 37.8) {
           var point = svg.append("path")
             .datum({type: "Point", coordinates: data.coordinates.coordinates})
             .attr("fill", "orange")
@@ -87,7 +83,7 @@
           createjs.Sound.play("beep8");
         }
 
-        else if (lat > 37) {
+        else if (lat > 37.8) {
           var point = svg.append("path")
             .datum({type: "Point", coordinates: data.coordinates.coordinates})
             .attr("fill", "green")

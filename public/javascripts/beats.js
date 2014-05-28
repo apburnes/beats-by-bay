@@ -48,8 +48,10 @@
 
     function addPoints(data) {
       if (data.coordinates !== null) {
+
         var lat = parseFloat(data.coordinates.coordinates[1]);
         var coords = projection(data.coordinates.coordinates);
+
         if (lat <= 37.5) {
           var point = svg.append("path")
             .datum({type: "Point", coordinates: data.coordinates.coordinates})
@@ -57,7 +59,6 @@
             .attr("stroke", "#000")
             .attr("stroke-width", 3)
             .attr("d", path)
-
           createjs.Sound.play("beep6");
         }
 
@@ -68,7 +69,6 @@
             .attr("stroke", "#000")
             .attr("stroke-width", 3)
             .attr("d", path)
-
           createjs.Sound.play("beep7");
         }
 
@@ -79,7 +79,6 @@
             .attr("stroke", "#000")
             .attr("stroke-width", 3)
             .attr("d", path)
-
           createjs.Sound.play("beep8");
         }
 
@@ -90,15 +89,11 @@
             .attr("stroke", "#000")
             .attr("stroke-width", 3)
             .attr("d", path)
-
           createjs.Sound.play("beep9");
         }
 
-
-
         point.append("title")
           .text(function (d) { return JSON.stringify(data.text)});
-
         point.transition()
           .style("opacity", .1)
           .style("fill", "#000")
